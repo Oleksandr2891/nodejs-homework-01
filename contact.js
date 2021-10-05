@@ -22,7 +22,7 @@ async function listContacts() {
 async function getContactById(contactId) {
   const contacts = JSON.parse(await fs.readFile(contactsPath, "utf-8"));
   const result = await contacts.find((item) => {
-    if (item.id === contactId)
+    if (item.id === +contactId)
       return {
         Id: item.id,
         Name: item.name,
@@ -33,13 +33,13 @@ async function getContactById(contactId) {
   return console.table(result);
 }
 
-// getContactById(5);
+// getContactById(12);
 
 async function removeContact(contactId) {
   const contacts = JSON.parse(await fs.readFile(contactsPath, "utf-8"));
 
   const result = await contacts.filter((item) => {
-    if (item.id !== contactId)
+    if (item.id !== +contactId)
       return {
         Id: item.id,
         Name: item.name,
@@ -51,7 +51,7 @@ async function removeContact(contactId) {
   return console.table(result);
 }
 
-// removeContact(1);
+// removeContact(12);
 
 async function addContact(name, email, phone) {
   const contacts = JSON.parse(await fs.readFile(contactsPath, "utf-8"));
@@ -59,7 +59,6 @@ async function addContact(name, email, phone) {
   const getId = () => {
     const arrId = contacts.map((item) => +item.id);
     const maxId = Math.max(...arrId);
-    console.log(`maxId`, maxId);
     return maxId + 1;
   };
 
